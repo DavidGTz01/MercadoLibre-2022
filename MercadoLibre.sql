@@ -27,10 +27,13 @@ CONSTRAINT FK_Producto_Producto FOREIGN KEY (idCliente)
 CREATE TABLE Compra(
 idCompra            integer       NOT NULL,    
 idProducto          integer       NOT NULL,
+idCliente           smallint      NOT NULL,
 unidades            bigint        NOT NULL,
 preciocompra        decimal(7,2)  NOT NULL,
 fechahora           datetime      NOT NULL,
 PRIMARY KEY (idCompra),
 CONSTRAINT FK_Producto_Compra FOREIGN KEY (idProducto)
 	REFERENCES Producto(idProducto)
+CONSTRAINT FK_Producto_idCliente FOREIGN KEY (idCliente)
+	REFERENCES Cliente(idCliente)
 );
