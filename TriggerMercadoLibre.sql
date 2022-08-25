@@ -1,114 +1,26 @@
--- Realizar los SP para dar de alta todas las entidades recibiendo los parámetros necesarios.
+--Realizar un trigger que antes de realizar una compra, se verifique se posean al menos en stock la cantidad de unidades pretendidas por la compra; en caso que no sea así no se tiene que permitir la compra y se tiene que mostrar leyenda ‘Unidades Insuficientes’.
 DELIMITER $$
-DROP PROCEDURE IF EXISTS AltaCompra $$
-CREATE PROCEDURE AltaCompra (unidCompra INTEGER UNSIGNED ,    
-       unidProducto INTEGER ,     
-       unidCliente SMALLINT , ununidades BIGINT UNSIGNED , unpreciocompra DECIMAL(7.2) , unfechahora DATETIME)
+CREATE TRIGGER  BefInsCompra BEFORE INSERT ON Compra 
+FOR EACH ROW
 BEGIN 
-   INSERT INTO Compra (idCompra,idProducto,idCliente, unidades, preciocompra, fechahora)
-      VALUES(unidCompra, unidProducto,unidCliente, ununidades,     
-	unpreciocompra, unfechahora);
+IF(EXISTS (SELECT * 
+        FROM Producto 
+        WHERE idProducto = NEW.idProducto
+         AND 	cantidad < NEW.unidades  )) THEN
+SIGNAL SQLSTATE ‘45000’
+SET MESSAGE_TEXT = ‘Unidades Insuficientes’ ;
+END IF;
+END$$
 
-
-END $$    
-
-
-DELIMITER $$
-DROP PROCEDURE IF EXISTS AltaCliente $$
-CREATE PROCEDURE AltaCliente (unidCliente SMALLINT ,  
-    unnombre VARCHAR(45), 
-    unapellido VARCHAR(45),
-    untelefono INTEGER UNSIGNED,
-    unemail VARCHAR(45), 
-    unusuario VARCHAR (45), 
-    uncontrasena CHAR(45))
-BEGIN
-   INSERT INTO Cliente (idCliente, nombre, apellido, telefono, email, usuario, contrasena)
-      VALUES( unidCliente, unnombre, unapellido, untelefono, unemail, 
-	unusuario, SHA2(contrasena,256));
-END $$    
-
+--Realizar un trigger para que al momento de hacer una compra, al confirmarse la misma se decremente del stock del producto la cantidad de unidades compradas.
 
 DELIMITER $$
-DROP PROCEDURE IF EXISTS AltaProducto $$
-CREATE PROCEDURE AltaProducto (unidProducto INTEGER UNSIGNED ,
-					         unidCliente SMALLINT ,
-         unprecio DECIMAL(7,2) ,
-         uncantidad BIGINT UNSIGNED ,
-         unnombre VARCHAR(45) ,
-         unpublicacion DATETIME )
-BEGIN
-   INSERT INTO Producto (idProducto, idCliente, precio, cantidad, nombre, publicacion)
-      VALUES(unidProducto, unidCliente ,unprecio, uncantidad, unnombre, unpublicacion);
+CREATE TRIGGER AftUpdatedecrementar  AFTER INSERT ON Compra
 
-END $$    
--- Realizar el SF ‘recaudacionPara’ que reciba por parámetros el identificador de un producto y 2 fechas, la función tiene que devolver la sumatoria de las ventas de ese producto entre esas 2 fechas (inclusive). 
+FOR EACH  ROW 
+BEGIN 
+  UPDATE Producto
+  SET cantidad = (cantidad - NEW.unidades)
+  WHERE idProducto = NEW.idProducto;
 
-DELIMITER $$
-DROP FUNCTION IF EXISTS recaudacionPara $$
-CREATE FUNCTION recaudacionPara (unidProducto INTEGER UNSIGNED,
-                                                                     cotaSuperior DATETIME,
-                                                                     cotaInferior DATETIME)
-                                                                  RETURNS FLOAT READS SQL DATA
-BEGIN
-  DECLARE resultado FLOAT;
-  SELECT SUM(preciodecompra * unidades ) INTO resultado
-  FROM Compra 
-  WHERE idCompra = unidCompra
-  AND fechahora BETWEEN cotaInferior AND cotaSuperior; 
-   
-        RETURN resultado;
-END $$
-
--- Se pide hacer el SP ‘BuscarProducto’ que reciba por parámetro una cadena. El SP tiene que devolver los productos que contengan la cadena en su nombre (Documentación función MATCH-AGAINST).
-
-DELIMITER $$
-DROP PROCEDURE IF EXISTS BuscarProducto $$
-CREATE PROCEDURE BuscarProducto (nombre VARCHAR (45))
-					        			         
-BEGIN
- SELECT nombre
- FROM Producto
-WHERE  MATCH (nombre) AGAINST (nombre IN boolean mode);
-END $$    
--- Realizar el SP ‘VentasDe’ que reciba como parámetro un idUsuario, el SP tiene que devolver todas las columnas de la tabla Compra que pertenezcan al usuario ordenadas por fecha de mayor a menor.
-     
-DELIMITER $$
-DROP PROCEDURE IF EXISTS VentasDe $$
-CREATE PROCEDURE VentasDe (unidCliente SMALLINT)
-
-BEGIN
-  SELECT CO.idCompra , CO.idProducto, CO.idCliente, CO.unidades, CO.preciocompra,  CO.fechahora 
-  FROM Compra CO
-  INNER JOIN Producto P ON CO.idProducto = P.idProducto
-  WHERE idCliente = unidCliente 
-  ORDER BY fechahora DESC;
-
-END $$    
-
--- Realizar el SP ‘ComprasDe’ que reciba como parámetro un idUsuario, el SP tiene que devolver todas las columnas de la tabla Compra que pertenezcan al usuario ordenadas por fecha de mayor a menor.
-
-DELIMITER $$
-DROP PROCEDURE IF EXISTS ComprasDe $$
-CREATE PROCEDURE ComprasDe (unidCliente SMALLINT)
-          					  
-BEGIN
-  SELECT CO.idCompra , CO.idProducto , CO.idCliente, CO.unidades, CO.preciocompra,  CO.fechahora
- FROM Compra 
-  WHERE idCliente = unidCliente
-  ORDER BY fechahora DESC;
-
-END $$    
-DELIMITER $$ 
-
-CALL AltaCliente (9, 'magali Lara Aborto','rodriguez', 119877,'maga.rodriguez@gmail.com', 'Maguis', 'magui89');
-
-CALL AltaProducto (1908, 9, 11000 , 1, 'Álbum de Stray Kids - Circus' , '2022-10-06 00:00:00');
-
-CALL AltaCompra (250, 1908, 9, 1, 11000, '2022-15-06 15:32:03');
-
-
-SELECT idProducto(30)'Cantidad de productos disponibles para la venta';
-
-
-END $$
+END$$
