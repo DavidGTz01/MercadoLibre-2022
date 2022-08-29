@@ -3,7 +3,7 @@ CREATE DATABASE IF NOT EXISTS MercaLibre;
 USE MercaLibre;
  
 CREATE TABLE Cliente(
-idCliente           smallint      NOT NULL,
+idCliente           smallint      NOT NULL UNIQUE,
 nombre              varchar (45)  NOT NULL,
 apellido            varchar (45)  NOT NULL,
 telefono            integer       NOT NULL,
@@ -25,7 +25,7 @@ CONSTRAINT FK_Producto_Producto FOREIGN KEY (idCliente)
 	REFERENCES Cliente(idCliente),
  FULLTEXT (nombre)
 );
- 
+
 CREATE TABLE Compra(
 idCompra            integer       NOT NULL,    
 idProducto          integer       NOT NULL,
