@@ -3,7 +3,7 @@ DELIMITER $$
 DROP PROCEDURE IF EXISTS AltaCompra $$
 CREATE PROCEDURE AltaCompra (unidCompra INTEGER UNSIGNED ,    
        unidProducto INTEGER ,     
-       unidCliente SMALLINT , ununidades BIGINT UNSIGNED , unpreciocompra DECIMAL(7.2) , unfechahora DATETIME)
+       unidCliente SMALLINT , ununidades BIGINT UNSIGNED , unpreciocompra DECIMAL(11.2) , unfechahora DATETIME)
 BEGIN 
    INSERT INTO Compra (idCompra,idProducto,idCliente, unidades, preciocompra, fechahora)
       VALUES(unidCompra, unidProducto,unidCliente, ununidades,     
@@ -32,7 +32,7 @@ DELIMITER $$
 DROP PROCEDURE IF EXISTS AltaProducto $$
 CREATE PROCEDURE AltaProducto (unidProducto INTEGER UNSIGNED ,
 					         unidCliente SMALLINT ,
-         unprecio DECIMAL(7,2) ,
+         unprecio DECIMAL(11,2) ,
          uncantidad BIGINT UNSIGNED ,
          unnombre VARCHAR(45) ,
          unpublicacion DATETIME )

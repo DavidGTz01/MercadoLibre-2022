@@ -15,7 +15,7 @@ PRIMARY KEY (idCliente)
 CREATE TABLE Producto(
 idProducto          integer       NOT NULL,
 idCliente           smallint      NOT NULL,
-precio              decimal(7,2)  NOT NULL,
+precio              decimal(11,2)  NOT NULL,
 cantidad            bigint        NOT NULL,
 nombre              varchar (45)  NOT NULL,
 publicacion         datetime      NOT NULL,
