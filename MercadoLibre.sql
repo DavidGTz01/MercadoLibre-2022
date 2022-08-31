@@ -15,7 +15,7 @@ PRIMARY KEY (idCliente)
 CREATE TABLE Producto(
 idProducto          integer       NOT NULL,
 idCliente           smallint      NOT NULL,
-precio              decimal(11,2)  NOT NULL,
+precio              decimal(11,2) NOT NULL,
 cantidad            bigint        NOT NULL,
 nombre              varchar (45)  NOT NULL,
 publicacion         datetime      NOT NULL,
@@ -31,7 +31,7 @@ idCompra            integer       NOT NULL,
 idProducto          integer       NOT NULL,
 idCliente           smallint      NOT NULL,
 unidades            bigint        NOT NULL,
-preciocompra        decimal(7,2)  NOT NULL,
+preciocompra        decimal(11,2) NOT NULL,
 fechahora           datetime      NOT NULL,
 PRIMARY KEY (idCompra),
 CONSTRAINT FK_Producto_Compra FOREIGN KEY (idProducto)

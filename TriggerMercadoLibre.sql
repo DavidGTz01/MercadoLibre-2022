@@ -15,7 +15,7 @@ END$$
 --Realizar un trigger para que al momento de hacer una compra, al confirmarse la misma se decremente del stock del producto la cantidad de unidades compradas.
 
 DELIMITER $$
-CREATE TRIGGER AftInsCum  AFTER INSERT ON Compra
+CREATE TRIGGER AftInsCom  AFTER INSERT ON Compra
 
 FOR EACH  ROW 
 BEGIN 
