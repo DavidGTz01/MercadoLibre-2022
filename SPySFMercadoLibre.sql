@@ -100,9 +100,9 @@ BEGIN
 END $$    
 
 
-CALL AltaCliente (30,'Rosaurita', 'Pedraza', '1122334455', 'rosauritapedraza30@gmail.com', 'Rous', 'bangchansit0'); 
+CALL AltaCliente (30,'Rosaurita', 'Pedraza', 1122334455, 'rosauritapedraza30@gmail.com', 'Rous', 'bangchansit0'); 
 
-CALL AltaCliente (44, 'Evelyn', 'Siles', '1136170568', 'silesevelyn04@gmail.com' ,'Ev3', 'hope225');
+CALL AltaCliente (44, 'Evelyn', 'Siles', 1136170568, 'silesevelyn04@gmail.com' ,'Ev3', 'hope225');
 
 CALL AltaCliente (09, 'Magali Lara Aborto','Rodriguez', 1198778890,'maga.rodriguez@gmail.com', 'Maguis', 'magui89');
 
