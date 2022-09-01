@@ -98,7 +98,7 @@ BEGIN
   ORDER BY fechahora DESC;
 
 END $$    
-DELIMITER $$ 
+
 
 CALL AltaCliente (30,'Rosaurita', 'Pedraza', '1122334455', 'rosauritapedraza30@gmail.com', 'Rous', 'bangchansit0'); 
 
@@ -145,4 +145,3 @@ CALL AltaCompra (500, 211, 09, 2, 36000, '2022-04-08 17:40:05');
 
 CALL AltaCompra (502, 190 , 09, 1, 11000, '2022-04-08 17:44:03');
 
-END $$
