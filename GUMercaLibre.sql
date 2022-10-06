@@ -20,6 +20,7 @@ GRANT SELECT, INSERT, UPDATE(precio, cantidad) ON MercaLibre.Producto TO  'Siste
 
 
 -- Usuario:  desde cualquier lado puede
+DROP USER IF EXISTS 'Usuario'@'%';
 CREATE USER 'Usuario'@'%' IDENTIFIED BY 'passUsuario';
 
 -- Ver todo lo de la tabla usuario.
