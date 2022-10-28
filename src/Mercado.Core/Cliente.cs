@@ -1,4 +1,9 @@
-﻿namespace Mercado.AdoMysql;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Mercado.AdoMysql;
 public class Cliente
 {
     public int idCliente { get; set; }
@@ -17,17 +22,6 @@ public class Cliente
         this.telefono = telefono;
         this.email = email;
         this.usuario = usuario;
-        this.constrasena = contrasena;
+        this.contrasena = contrasena;
     }
-}
-
-public class Producto
-{
-    public int idProducto { get; set; }
-    public int idCliente { get; set; }
-    public decimal precio { get; set; }
-    public int cantidad { get; set; }
-    public string nombre { get; set; }
-    public datetime publicacion { get; set; }
-    public Producto() { }
 }
