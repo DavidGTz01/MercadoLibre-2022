@@ -9,12 +9,12 @@ namespace Mercado.Core
     {
         public int idCompra { get; set; }
         public int idProducto { get; set; }
-        public int idCliente { get; set; }
-        public int unidades { get; set; }
-        public decimal preciocompra { get; set; }
+        public short idCliente { get; set; }
+        public long unidades { get; set; }
+        public double preciocompra { get; set; }
         public DateTime fechahora { get; set; }
         public Compra() { }
-        public Compra(int idCompra, int idProducto, int idCliente, int unidades, decimal preciocompra, DateTime fechahora)
+        public Compra(int idCompra, int idProducto, short idCliente, long unidades, double preciocompra, DateTime fechahora)
         {
             this.idCompra = idCompra;
             this.idProducto = idProducto;

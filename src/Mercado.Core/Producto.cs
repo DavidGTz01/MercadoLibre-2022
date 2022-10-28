@@ -8,13 +8,13 @@ namespace Mercado.Core
     public class Producto
     {
         public int idProducto { get; set; }
-        public int idCliente { get; set; }
-        public decimal precio { get; set; }
-        public int cantidad { get; set; }
+        public short idCliente { get; set; }
+        public double precio { get; set; }
+        public long cantidad { get; set; }
         public string nombre { get; set; }
         public DateTime publicacion { get; set; }
         public Producto() { }
-        public Producto(int idProducto, int idCliente, decimal precio, int cantidad, string nombre, DateTime publicacion)
+        public Producto(int idProducto, short idCliente, double precio, long cantidad, string nombre, DateTime publicacion)
         {
             this.idProducto = idProducto;
             this.idCliente = idCliente;
