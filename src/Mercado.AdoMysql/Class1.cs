@@ -15,18 +15,19 @@ namespace Mercado.AdoMySQL.Mapeadores
         public override Cliente ObjetoDesdeFila(DataRow fila)
             => new Cliente()
             {
-                idCliente = Convert.ToShort(fila["idCliente"]),
-                Nombre = fila["Cliente"].ToString()
-                apellido = fila["Cliente"].ToString()
-                telefono = fila["Cliente"].ToInt()
-                email = fila["Cliente"].ToString()
-                usuario = fila["Cliente"].ToString()
+                idCliente = Convert.ToUInt16(fila["idCliente"]),
+                Nombre = fila["Cliente"].ToString(),
+                apellido = fila["Cliente"].ToString(),
+                telefono = Convert.ToUInt16(fila["telefono"]),
+                email = fila["Cliente"].ToString(),
+                usuario = fila["Cliente"].ToString(),
                 contraseña = fila["Cliente"].ToString()
             };
 
-        public void AltaCliente(Cliente Cliente)
-            => EjecutarComandoCon("altaCliente", ConfigurarAltaCliente, PostAltaCliente, Cliente);
-
+        public void AltaCliente(Cliente cliente)
+        {
+            EjecutarComandoCon("altaCliente", ConfigurarAltaCliente, cliente);
+        }
         public void ConfigurarAltaRubro(Cliente cliente)
         {
             SetComandoSP("altaCliente");
@@ -56,20 +57,13 @@ namespace Mercado.AdoMySQL.Mapeadores
               .AgregarParametro();
 
             BP.CrearParametro("uncontrasena")
-              .SetTipoSmallInt
+              .SetTipoString
               .SetValor(uncontrasena.Nombre)
               .AgregarParametro();
         }
-
-        public void PostAltaCliente(Cliente Cliente)
+        public Cliente ClientePorId(Short idCliente)
         {
-            var paramIdCliente = GetParametro("unIdCliente");
-            Cliente.Id = Convert.ToShort(paramIdCliente.Value);
-        }
-
-        public Cliente ClientePorId(Short id)
-        {
-            SetComandoSP("ClientePorId");
+            SetComandoSP("ClientePoridCliente");
 
             BP.CrearParametro("unIdCliente")
               .SetTipo(MySql.Data.MySqlClient.MySqlDbType.Short)
