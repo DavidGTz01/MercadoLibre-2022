@@ -12,7 +12,7 @@ END $$
 
 DELIMITER $$
 DROP PROCEDURE IF EXISTS AltaCliente $$
-CREATE PROCEDURE AltaCliente (unidCliente SMALLINT ,  
+CREATE PROCEDURE AltaCliente (unidCliente SMALLINT,  
     unnombre VARCHAR(45), 
     unapellido VARCHAR(45),
     untelefono INTEGER UNSIGNED,
