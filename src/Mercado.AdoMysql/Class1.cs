@@ -35,22 +35,9 @@ namespace Mercado.AdoMySQL.Mapeadores
               .SetTipo(MySql.Data.MySqlClient.MySqlDbType.UByte)
               .AgregarParametro();
 
-            BP.CrearParametro("unCliente")
-              .SetTipoSmallInt
-              .SetValor(Cliente.Nombre)
-              .AgregarParametro();
-
-            BP.CrearParametroSalida("unIdCliente")
-              .SetTipo(MySql.Data.MySqlClient.MySqlDbType.UByte)
-              .AgregarParametro();
-
             BP.CrearParametro("unapellido")
               .SetTipoString
               .SetValor(apellido.Nombre)
-              .AgregarParametro();
-
-            BP.CrearParametroSalida("unIdCliente")
-              .SetTipo(MySql.Data.MySqlClient.MySqlDbType.UByte)
               .AgregarParametro();
 
             BP.CrearParametro("untelefono")
@@ -58,26 +45,14 @@ namespace Mercado.AdoMySQL.Mapeadores
               .SetValor(untelefono.Nombre)
               .AgregarParametro();
 
-            BP.CrearParametroSalida("unIdCliente")
-              .SetTipo(MySql.Data.MySqlClient.MySqlDbType.UByte)
-              .AgregarParametro();
-
             BP.CrearParametro("unemail")
               .SetTipoString
-              .SetValor(Cliente.Nombre)
-              .AgregarParametro();
-
-            BP.CrearParametroSalida("unIdCliente")
-              .SetTipo(MySql.Data.MySqlClient.MySqlDbType.UByte)
+              .SetValor(unemail.Nombre)
               .AgregarParametro();
 
             BP.CrearParametro("unusuario")
               .SetTipoString
               .SetValor(unusuario.Nombre)
-              .AgregarParametro();
-
-            BP.CrearParametroSalida("unIdCliente")
-              .SetTipo(MySql.Data.MySqlClient.MySqlDbType.UByte)
               .AgregarParametro();
 
             BP.CrearParametro("uncontrasena")
