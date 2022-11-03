@@ -3,6 +3,7 @@ using et12.edu.ar.AGBD.Ado;
 using System;
 using System.Data;
 using System.Collections.Generic;
+using Mercado.AdoMysql;
 
 namespace Mercado.AdoMySQL.Mapeadores
 {
@@ -15,20 +16,20 @@ namespace Mercado.AdoMySQL.Mapeadores
         public override Cliente ObjetoDesdeFila(DataRow fila)
             => new Cliente()
             {
-                idCliente = Convert.ToUInt16(fila["idCliente"]),
-                Nombre = fila["Cliente"].ToString(),
-                apellido = fila["Cliente"].ToString(),
+                idCliente = Convert.ToInt16(fila["idCliente"]),
+                nombre = fila["nombre"].ToString(),
+                apellido = fila["apellido"].ToString(),
                 telefono = Convert.ToUInt16(fila["telefono"]),
-                email = fila["Cliente"].ToString(),
-                usuario = fila["Cliente"].ToString(),
-                contraseña = fila["Cliente"].ToString()
+                email = fila["email"].ToString(),
+                usuario = fila["usuario"].ToString(),
+                contrasena = fila["contrasena"].ToString()
             };
 
         public void AltaCliente(Cliente cliente)
         {
             EjecutarComandoCon("altaCliente", ConfigurarAltaCliente, cliente);
         }
-        public void ConfigurarAltaRubro(Cliente cliente)
+        public void ConfigurarAltaCliente(Cliente cliente)
         {
             SetComandoSP("altaCliente");
 
@@ -37,41 +38,32 @@ namespace Mercado.AdoMySQL.Mapeadores
               .AgregarParametro();
 
             BP.CrearParametro("unapellido")
-              .SetTipoString
-              .SetValor(apellido.Nombre)
+              .SetTipoVarchar(45)
+              .SetValor(cliente.apellido)
               .AgregarParametro();
 
             BP.CrearParametro("untelefono")
-              .SetTipoSmallInt
-              .SetValor(untelefono.Nombre)
+              .SetTipo(MySql.Data.MySqlClient.MySqlDbType.UInt32)
+              .SetValor(cliente.telefono)
               .AgregarParametro();
 
             BP.CrearParametro("unemail")
-              .SetTipoString
-              .SetValor(unemail.Nombre)
+              .SetTipoVarchar(45)
+              .SetValor(cliente.email)
               .AgregarParametro();
 
             BP.CrearParametro("unusuario")
-              .SetTipoString
-              .SetValor(unusuario.Nombre)
+              .SetTipoVarchar(45)
+              .SetValor(cliente.usuario)
               .AgregarParametro();
 
             BP.CrearParametro("uncontrasena")
-              .SetTipoString
-              .SetValor(uncontrasena.Nombre)
+              .SetTipoChar(45)
+              .SetValor(cliente.contrasena)
               .AgregarParametro();
         }
-        public Cliente ClientePorId(Short idCliente)
-        {
-            SetComandoSP("ClientePoridCliente");
-
-            BP.CrearParametro("unIdCliente")
-              .SetTipo(MySql.Data.MySqlClient.MySqlDbType.Short)
-              .SetValor(id)
-              .AgregarParametro();
-
-            return ElementoDesdeSP();
-        }
+        public Cliente? ClientePorId(short idCliente)
+          => FiltrarPorPK("idCliente", idCliente);
 
         public List<Cliente> ObtenerClientes() => ColeccionDesdeTabla();
     }
