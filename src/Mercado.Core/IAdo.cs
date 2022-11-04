@@ -8,8 +8,13 @@ namespace Mercado.Core.Ado
         //Acciones para la entidad Cliente
         void AltaCliente(Cliente cliente);
         List<Cliente> ObtenerClientes();
+
         //Acciones para la entidad Producto
         void AltaProducto(Producto producto);
         List<Producto> ObtenerProductos();
+
+        //Acciones para la entidad Compra
+        void AltaCompra(Compra compra);
+        List<Compra> ObtenerCompra();
     }
 }

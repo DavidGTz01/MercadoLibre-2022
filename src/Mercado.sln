@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mercado.Core", "Mercado.Cor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mercado.AdoMysql", "Mercado.AdoMysql\Mercado.AdoMysql.csproj", "{95A76DCA-414D-47ED-9669-0650F417ACA6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mercado.AdoTest", "Mercado.AdoTest\Mercado.AdoTest.csproj", "{B53B144A-A53E-485F-9A29-21D7A1B8FCCD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{95A76DCA-414D-47ED-9669-0650F417ACA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95A76DCA-414D-47ED-9669-0650F417ACA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95A76DCA-414D-47ED-9669-0650F417ACA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B53B144A-A53E-485F-9A29-21D7A1B8FCCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B53B144A-A53E-485F-9A29-21D7A1B8FCCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B53B144A-A53E-485F-9A29-21D7A1B8FCCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B53B144A-A53E-485F-9A29-21D7A1B8FCCD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

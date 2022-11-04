@@ -7,22 +7,13 @@ namespace Mercado.Core
 {
     public class Compra
     {
-        public int idCompra { get; set; }
-        public int idProducto { get; set; }
-        public short idCliente { get; set; }
-        public long unidades { get; set; }
-        public double preciocompra { get; set; }
+        public uint idCompra { get; set; }
+        public Producto idProducto { get; set; }
+        public Cliente idCliente { get; set; }
+        public ulong unidades { get; set; }
+        public decimal preciocompra { get; set; }
         public DateTime fechahora { get; set; }
-        public Compra() { }
-        public Compra(int idCompra, int idProducto, short idCliente, long unidades, double preciocompra, DateTime fechahora)
-        {
-            this.idCompra = idCompra;
-            this.idProducto = idProducto;
-            this.idCliente = idCliente;
-            this.unidades = unidades;
-            this.preciocompra = preciocompra;
-            this.fechahora = fechahora;
-        }
-
+        public override string ToString()
+        => $" {idCliente.nombre} - Unidades: {unidades} - ${preciocompra:0.00}c/u - fecha y hora: {fechahora}";
     }
 }
