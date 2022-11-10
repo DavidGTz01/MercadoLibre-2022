@@ -7,7 +7,7 @@ DROP PROCEDURE
 CREATE PROCEDURE
     AltaCompra (
         unidCompra INTEGER UNSIGNED,
-        unidProducto INTEGER,
+        unidProducto INTEGER UNSIGNED,
         unidCliente SMALLINT,
         ununidades BIGINT UNSIGNED,
         unpreciocompra DECIMAL(11, 2),

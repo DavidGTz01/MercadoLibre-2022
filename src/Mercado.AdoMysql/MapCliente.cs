@@ -34,7 +34,7 @@ namespace Mercado.AdoMySQL.Mapeadores
             SetComandoSP("altaCliente");
 
             BP.CrearParametroSalida("unIdCliente")
-              .SetTipo(MySql.Data.MySqlClient.MySqlDbType.UByte)
+              .SetTipo(MySql.Data.MySqlClient.MySqlDbType.Int16)
               .AgregarParametro();
 
             BP.CrearParametro("unapellido")
@@ -62,9 +62,17 @@ namespace Mercado.AdoMySQL.Mapeadores
               .SetValor(cliente.contrasena)
               .AgregarParametro();
         }
-        public Cliente? ClientePorId(short idCliente)
-          => FiltrarPorPK("idCliente", idCliente);
+        public Cliente ClientePorId(short idCliente)
+        {
+            SetComandoSP("ClientePorId");
 
+            BP.CrearParametro("unIdCliente")
+              .SetTipo(MySql.Data.MySqlClient.MySqlDbType.Int16)
+              .SetValor(idCliente)
+              .AgregarParametro();
+
+            return ElementoDesdeSP();
+        }
         public List<Cliente> ObtenerClientes() => ColeccionDesdeTabla();
     }
 }

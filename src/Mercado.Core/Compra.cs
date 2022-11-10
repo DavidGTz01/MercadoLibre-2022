@@ -13,7 +13,15 @@ namespace Mercado.Core
         public ulong unidades { get; set; }
         public decimal preciocompra { get; set; }
         public DateTime fechahora { get; set; }
-        public override string ToString()
-        => $" {idCliente.nombre} - Unidades: {unidades} - ${preciocompra:0.00}c/u - fecha y hora: {fechahora}";
+        public Compra() { }
+        public Compra(uint idCompra, Producto idProducto, Cliente idCliente, ulong unidades, decimal preciocompra, DateTime fechahora)
+        {
+            this.idCompra = idCompra;
+            this.idProducto = idProducto;
+            this.idCliente = idCliente;
+            this.unidades = unidades;
+            this.preciocompra = preciocompra;
+            this.fechahora = fechahora;
+        }
     }
 }

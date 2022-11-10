@@ -1,7 +1,9 @@
+using et12.edu.ar.AGBD.Mapeadores;
+using et12.edu.ar.AGBD.Ado;
 using System;
+using System.Data;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Mercado.AdoMysql;
 
 namespace Mercado.AdoMySQL.Mapeadores
 {
@@ -18,7 +20,7 @@ namespace Mercado.AdoMySQL.Mapeadores
             nombre = fila["nombre"].ToString(),
             cantidad = Convert.ToUInt16(fila["cantidad"]),
             precio = Convert.ToDecimal(fila["precio"]),
-            Cliente = MapCliente.ClientePorId(Convert.ToInt16(fila["idCliente"])),
+            idCliente = MapCliente.ClientePorId(Convert.ToInt16(fila["idCliente"])),
             idProducto = Convert.ToUInt16(fila["idProducto"]),
             publicacion = fila["publicacion"].ToDateTime()
         };
@@ -31,18 +33,16 @@ namespace Mercado.AdoMySQL.Mapeadores
             SetComandoSP("ProductosPorCliente");
 
             BP.CrearParametro("unidCliente")
-              .SetTipo(MySql.Data.MySqlClient.MySqlDbType.Short)
-              .SetValor(cliente.Id)
+              .SetTipo(MySql.Data.MySqlClient.MySqlDbType.Int16)
+              .SetValor(cliente.idCliente)
               .AgregarParametro();
 
             return ColeccionDesdeSP();
         }
-
         public void AltaProducto(Producto producto)
         {
             EjecutarComandoCon("altaProducto", ConfigurarAltaProducto, producto);
         }
-
         private void ConfigurarAltaProducto(Producto producto)
         {
             SetComandoSP("altaProducto");
@@ -52,8 +52,8 @@ namespace Mercado.AdoMySQL.Mapeadores
               .AgregarParametro();
 
             BP.CrearParametro("unidCliente")
-              .SetTipo(MySql.Data.MySqlClient.MySqlDbType.UInt32)
-              .SetValor(producto.Cliente.Id)
+              .SetTipo(MySql.Data.MySqlClient.MySqlDbType.Int16)
+              .SetValor(producto.Cliente.idCliente)
               .AgregarParametro();
 
             BP.CrearParametro("unnombre")
@@ -67,12 +67,12 @@ namespace Mercado.AdoMySQL.Mapeadores
               .AgregarParametro();
 
             BP.CrearParametro("uncantidad")
-              .SetTipo(MySql.Data.MySqlClient.MySqlDbType.Ulong)
+              .SetTipo(MySql.Data.MySqlClient.MySqlDbType.Int16)
               .SetValor(producto.cantidad)
               .AgregarParametro();
 
             BP.CrearParametro("unpublicacion")
-              .SetTipoDATETIME
+              .SetTipoDatetime
               .SetValor(producto.publicacion)
               .AgregarParametro();
         }

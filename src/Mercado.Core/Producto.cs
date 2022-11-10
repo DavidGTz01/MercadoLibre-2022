@@ -13,8 +13,16 @@ namespace Mercado.Core
         public ulong cantidad { get; set; }
         public string nombre { get; set; }
         public DateTime publicacion { get; set; }
-        public override string ToString()
-        => $"{nombre} - {idCliente.nombre} - Cantidad: {cantidad} - ${precio:0.00}c/u - Publicacion: {publicacion}";
+        public Producto() { }
+        public Producto(uint idProducto, Cliente idCliente, decimal precio, ulong cantidad, string nombre, DateTime publicacion)
+        {
+            this.idProducto = idProducto;
+            this.idCliente = idCliente;
+            this.precio = precio;
+            this.cantidad = cantidad;
+            this.nombre = nombre;
+            this.publicacion = publicacion;
+        }
     }
 }
 // 
