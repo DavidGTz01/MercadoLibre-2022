@@ -37,6 +37,11 @@ namespace Mercado.AdoMySQL.Mapeadores
               .SetTipo(MySql.Data.MySqlClient.MySqlDbType.Int16)
               .AgregarParametro();
 
+            BP.CrearParametro("unnombre")
+              .SetTipoVarchar(45)
+              .SetValor(cliente.nombre)
+              .AgregarParametro();
+
             BP.CrearParametro("unapellido")
               .SetTipoVarchar(45)
               .SetValor(cliente.apellido)
@@ -62,17 +67,8 @@ namespace Mercado.AdoMySQL.Mapeadores
               .SetValor(cliente.contrasena)
               .AgregarParametro();
         }
-        public Cliente ClientePorId(short idCliente)
-        {
-            SetComandoSP("ClientePorId");
-
-            BP.CrearParametro("unIdCliente")
-              .SetTipo(MySql.Data.MySqlClient.MySqlDbType.Int16)
-              .SetValor(idCliente)
-              .AgregarParametro();
-
-            return ElementoDesdeSP();
-        }
+        public Cliente ClientePorId(Int16 id)
+          => FiltrarPorPK("idCliente", id);
         public List<Cliente> ObtenerClientes() => ColeccionDesdeTabla();
     }
 }

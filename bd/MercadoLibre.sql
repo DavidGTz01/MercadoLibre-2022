@@ -1,3 +1,4 @@
+-- Active: 1630594990987@@127.0.0.1@3306@mercalibre
 DROP DATABASE IF EXISTS MercaLibre;
 CREATE DATABASE IF NOT EXISTS MercaLibre;
 USE MercaLibre;

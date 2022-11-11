@@ -4,7 +4,7 @@ using System;
 using System.Data;
 using System.Collections.Generic;
 using Mercado.AdoMysql;
-
+using Mercado.Core;
 namespace Mercado.AdoMySQL.Mapeadores
 {
     public class MapProducto : Mapeador<Producto>
@@ -17,11 +17,11 @@ namespace Mercado.AdoMySQL.Mapeadores
         }
         public override Producto ObjetoDesdeFila(DataRow fila) => new Producto()
         {
-            nombre = fila["nombre"].ToString(),
-            cantidad = Convert.ToUInt16(fila["cantidad"]),
-            precio = Convert.ToDecimal(fila["precio"]),
-            idCliente = MapCliente.ClientePorId(Convert.ToInt16(fila["idCliente"])),
             idProducto = Convert.ToUInt16(fila["idProducto"]),
+            idCliente = MapCliente.ClientePorId(Convert.ToInt16(fila["idCliente"])),
+            precio = Convert.ToDecimal(fila["precio"]),
+            cantidad = Convert.ToUInt16(fila["cantidad"]),
+            nombre = fila["nombre"].ToString(),
             publicacion = fila["publicacion"].ToDateTime()
         };
         public List<Producto> ObtenerProductos()
@@ -47,18 +47,13 @@ namespace Mercado.AdoMySQL.Mapeadores
         {
             SetComandoSP("altaProducto");
 
-            BP.CrearParametroSalida("unIdProducto")
+            BP.CrearParametro("unIdProducto")
               .SetTipo(MySql.Data.MySqlClient.MySqlDbType.UInt16)
               .AgregarParametro();
 
             BP.CrearParametro("unidCliente")
               .SetTipo(MySql.Data.MySqlClient.MySqlDbType.Int16)
               .SetValor(producto.Cliente.idCliente)
-              .AgregarParametro();
-
-            BP.CrearParametro("unnombre")
-              .SetTipoVarchar(45)
-              .SetValor(producto.nombre)
               .AgregarParametro();
 
             BP.CrearParametro("unprecio")
@@ -71,11 +66,18 @@ namespace Mercado.AdoMySQL.Mapeadores
               .SetValor(producto.cantidad)
               .AgregarParametro();
 
+            BP.CrearParametro("unnombre")
+              .SetTipoVarchar(45)
+              .SetValor(producto.nombre)
+              .AgregarParametro();
+
             BP.CrearParametro("unpublicacion")
-              .SetTipoDatetime
+              .SetTipo(MySql.Data.MySqlClient.MySqlDbType.DateTime)
               .SetValor(producto.publicacion)
               .AgregarParametro();
         }
+        public Producto ProductoPorId(UInt16 id)
+          => FiltrarPorPK("idProducto", id);
     }
 }
 

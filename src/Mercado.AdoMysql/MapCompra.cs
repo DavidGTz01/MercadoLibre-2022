@@ -89,9 +89,11 @@ namespace Mercado.AdoMySQL.Mapeadores
               .AgregarParametro();
 
             BP.CrearParametro("unfechahora")
-              .SetTipoDatetime
+              .SetTipo(MySql.Data.MySqlClient.MySqlDbType.DateTime)
               .SetValor(compra.fechahora)
               .AgregarParametro();
         }
+        public Compra CompraPorId(UInt16 id)
+          => FiltrarPorPK("idCompra", id);
     }
 }
