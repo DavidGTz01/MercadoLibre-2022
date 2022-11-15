@@ -22,12 +22,9 @@ namespace Mercado.AdoMySQL.Mapeadores
             precio = Convert.ToDecimal(fila["precio"]),
             cantidad = Convert.ToUInt16(fila["cantidad"]),
             nombre = fila["nombre"].ToString(),
-            publicacion = fila["publicacion"].ToDateTime()
+            publicacion = Convert.ToDateTime(fila["publicacion"])
         };
-        public List<Producto> ObtenerProductos()
-        {
-            ColeccionDesdeTabla();
-        }
+        public List<Producto> ObtenerProductos() => ColeccionDesdeTabla();
         public List<Producto> ObtenerProductos(Cliente cliente)
         {
             SetComandoSP("ProductosPorCliente");
@@ -53,7 +50,7 @@ namespace Mercado.AdoMySQL.Mapeadores
 
             BP.CrearParametro("unidCliente")
               .SetTipo(MySql.Data.MySqlClient.MySqlDbType.Int16)
-              .SetValor(producto.Cliente.idCliente)
+              .SetValor(producto.idCliente.idCliente)
               .AgregarParametro();
 
             BP.CrearParametro("unprecio")

@@ -4,19 +4,20 @@ using System;
 using System.Data;
 using System.Collections.Generic;
 using Mercado.AdoMysql;
+using Mercado.Core;
 
 namespace Mercado.AdoMySQL.Mapeadores
 {
     public class MapCompra : Mapeador<Compra>
     {
         public MapCliente MapCliente { get; set; }
-        public MapCompra(AdoAGBD ado) : base(ado) => Tabla = "Compra";
-        public MapCompra(MapCliente mapCliente) : this(mapCliente.AdoAGBD)
-        {
-            MapCliente = mapCliente;
-        }
         public MapProducto MapProducto { get; set; }
         public MapCompra(AdoAGBD ado) : base(ado) => Tabla = "Compra";
+        public MapCompra(MapCliente mapCliente, MapProducto mapProducto) : this(mapCliente.AdoAGBD)
+        {
+            MapCliente = mapCliente;
+            MapProducto = mapProducto;
+        }
         public MapCompra(MapProducto mapProducto) : this(mapProducto.AdoAGBD)
         {
             MapProducto = mapProducto;
@@ -28,18 +29,15 @@ namespace Mercado.AdoMySQL.Mapeadores
             idCliente = MapCliente.ClientePorId(Convert.ToInt16(fila["idCliente"])),
             unidades = Convert.ToUInt32(fila["unidades"]),
             preciocompra = Convert.ToDecimal(fila["preciocompra"]),
-            fechahora = fila["fecha y hora"].ToDateTime()
+            fechahora = Convert.ToDateTime(fila["fecha y hora"])
         };
-        public List<Compra> ObtenerCompra()
-        {
-            ColeccionDesdeTabla();
-        }
+        public List<Compra> ObtenerCompra() => ColeccionDesdeTabla();
         public List<Compra> ObtenerCompra(Cliente cliente)
         {
             SetComandoSP("CompraPorCliente");
 
             BP.CrearParametro("unidCliente")
-              .SetTipo(MySql.Data.MySqlClient.MySqlDbType.Short)
+              .SetTipo(MySql.Data.MySqlClient.MySqlDbType.Byte)
               .SetValor(cliente.idCliente)
               .AgregarParametro();
 
@@ -70,12 +68,12 @@ namespace Mercado.AdoMySQL.Mapeadores
 
             BP.CrearParametro("unidProducto")
               .SetTipo(MySql.Data.MySqlClient.MySqlDbType.UInt16)
-              .SetValor(compra.Cliente.idProducto)
+              .SetValor(compra.idProducto.idProducto)
               .AgregarParametro();
 
             BP.CrearParametro("unidCliente")
               .SetTipo(MySql.Data.MySqlClient.MySqlDbType.Int16)
-              .SetValor(compra.Cliente.idCliente)
+              .SetValor(compra.idCliente.idCliente)
               .AgregarParametro();
 
             BP.CrearParametro("ununidades")
