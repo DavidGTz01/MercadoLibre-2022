@@ -28,14 +28,15 @@ namespace Mercado.AdoMySQL.Mapeadores
 
         public void AltaCliente(Cliente cliente)
         {
-            EjecutarComandoCon("altaCliente", ConfigurarAltaCliente, cliente);
+            EjecutarComandoCon("AltaCliente", ConfigurarAltaCliente, cliente);
         }
         public void ConfigurarAltaCliente(Cliente cliente)
         {
-            SetComandoSP("altaCliente");
+            SetComandoSP("AltaCliente");
 
-            BP.CrearParametroSalida("unIdCliente")
-              .SetTipo(MySql.Data.MySqlClient.MySqlDbType.Int16)
+            BP.CrearParametroSalida("unidCliente")
+              .SetTipo(MySql.Data.MySqlClient.MySqlDbType.UInt16)
+              .SetValor(cliente.idCliente)
               .AgregarParametro();
 
             BP.CrearParametro("unnombre")

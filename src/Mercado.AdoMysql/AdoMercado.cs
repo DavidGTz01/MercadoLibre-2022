@@ -19,7 +19,7 @@ public class AdoMercado : IAdo
     }
     public void AltaCliente(Cliente cliente) => MapCliente.AltaCliente(cliente);
     public List<Cliente> ObtenerClientes() => MapCliente.ColeccionDesdeTabla();
-    public Cliente? ObtenerClientePorId(ushort idCliente)
+    public Cliente? ObtenerClientePorId(Int16 idCliente)
     => MapCliente.FiltrarPorPK("idCliente", idCliente);
 
     public void AltaCompra(Compra compra) => MapCompra.AltaCompra(compra);

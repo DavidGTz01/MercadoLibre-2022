@@ -26,10 +26,10 @@
     <ProjectReference Include="..\Mercado.AdoMysql\Mercado.AdoMysql.csproj" />
   </ItemGroup>
 
-</Project>
-
   <ItemGroup>
     <None Update="appSettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+
+</Project>
