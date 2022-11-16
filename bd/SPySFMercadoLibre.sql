@@ -1,108 +1,41 @@
 -- Active: 1646654372192@@127.0.0.1@3306@mercalibre
+
 -- Realizar los SP para dar de alta todas las entidades recibiendo los parámetros necesarios.
 
 DELIMITER $$
 
 DROP PROCEDURE
     IF EXISTS AltaCompra $$
-CREATE PROCEDURE
-    AltaCompra (
-        unidCompra INTEGER UNSIGNED,
-        unidProducto INTEGER UNSIGNED,
-        unidCliente SMALLINT,
-        ununidades BIGINT UNSIGNED,
-        unpreciocompra DECIMAL(11, 2),
-        unfechahora DATETIME
-    ) BEGIN
-INSERT INTO
-    Compra (
-        idCompra,
-        idProducto,
-        idCliente,
-        unidades,
-        preciocompra,
-        fechahora
-    )
-VALUES
-(
-        unidCompra,
-        unidProducto,
-        unidCliente,
-        ununidades,
-        unpreciocompra,
-        unfechahora
-    );
+CREATE PROCEDURE AltaCompra (unidCompra INTEGER UNSIGNED,unidProducto INTEGER UNSIGNED,unidCliente SMALLINT, ununidades BIGINT UNSIGNED,unpreciocompra DECIMAL(11, 2),unfechahora DATETIME)
+BEGIN 
+    INSERT INTO Compra (idCompra,idProducto,idCliente,unidades,preciocompra,fechahora)
+    VALUES(unidCompra,unidProducto,unidCliente,ununidades,unpreciocompra,unfechahora);
 
-END $$ 
+END $$
 
 DELIMITER $$
 
-DROP PROCEDURE
-    IF EXISTS AltaCliente $$
-CREATE PROCEDURE
-    AltaCliente(
-        unidCliente SMALLINT,
-        unnombre VARCHAR(45),
-        unapellido VARCHAR(45),
-        untelefono INTEGER UNSIGNED,
-        unemail VARCHAR(45),
-        unusuario VARCHAR (45),
-        uncontrasena CHAR(45)
+DROP PROCEDURE IF EXISTS AltaCliente $$
+CREATE PROCEDURE AltaCliente(unidCliente SMALLINT, unnombre VARCHAR(45),unapellido VARCHAR(45),untelefono INTEGER UNSIGNED,unemail VARCHAR(45),
+        unusuario VARCHAR (45),uncontrasena CHAR(45)
     ) BEGIN
 INSERT INTO
-    Cliente (
-        idCliente,
-        nombre,
-        apellido,
-        telefono,
-        email,
-        usuario,
-        contrasena
-    )
-VALUES
-(
-        unidCliente,
-        unnombre,
-        unapellido,
-        untelefono,
-        unemail,
-        unusuario,
+    Cliente (idCliente,nombre,apellido,telefono,email,usuario,contrasena)
+VALUES (unidCliente,unnombre,unapellido,untelefono,unemail,unusuario,
         SHA2(contrasena, 256)
     );
 
-END $$ 
+END $$
 
 DELIMITER $$
 
 DROP PROCEDURE
     IF EXISTS AltaProducto $$
 CREATE PROCEDURE
-    AltaProducto (
-        unidProducto INTEGER UNSIGNED,
-        unidCliente SMALLINT,
-        unprecio DECIMAL(11, 2),
-        uncantidad BIGINT UNSIGNED,
-        unnombre VARCHAR(45),
-        unpublicacion DATETIME
-    ) BEGIN
+    AltaProducto (unidProducto INTEGER UNSIGNED,unidCliente SMALLINT,unprecio DECIMAL(11, 2),uncantidad BIGINT UNSIGNED,unnombre VARCHAR(45),unpublicacion DATETIME) BEGIN
 INSERT INTO
-    Producto (
-        idProducto,
-        idCliente,
-        precio,
-        cantidad,
-        nombre,
-        publicacion
-    )
-VALUES
-(
-        unidProducto,
-        unidCliente,
-        unprecio,
-        uncantidad,
-        unnombre,
-        unpublicacion
-    );
+    Producto (idProducto,idCliente,precio,cantidad,nombre,publicacion)
+VALUES (unidProducto,unidCliente,unprecio,uncantidad,unnombre,unpublicacion);
 
 END $$ -- Realizar el SF ‘recaudacionPara’ que reciba por parámetros el identificador de un producto y 2 fechas, la función tiene que devolver la sumatoria de las ventas de ese producto entre esas 2 fechas (inclusive).
 
@@ -111,11 +44,7 @@ DELIMITER $$
 DROP FUNCTION
     IF EXISTS recaudacionPara $$
 CREATE FUNCTION
-    recaudacionPara (
-        unidProducto INTEGER UNSIGNED,
-        cotaSuperior DATETIME,
-        cotaInferior DATETIME
-    ) RETURNS FLOAT READS SQL DATA BEGIN DECLARE resultado FLOAT;
+    recaudacionPara (unidProducto INTEGER UNSIGNED,cotaSuperior DATETIME,cotaInferior DATETIME) RETURNS FLOAT READS SQL DATA BEGIN DECLARE resultado FLOAT;
 
 SELECT
     SUM(preciodecompra * unidades) INTO resultado
@@ -175,8 +104,7 @@ SELECT
     CO.preciocompra,
     CO.fechahora
 FROM Compra
-WHERE
-    idCliente = unidCliente
+WHERE idCliente = unidCliente
 ORDER BY fechahora DESC;
 
 END $$
