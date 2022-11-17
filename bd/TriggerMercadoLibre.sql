@@ -2,38 +2,22 @@
 
 DELIMITER $$
 
-DROP TRIGGER
-    IF EXISTS BefInsCom $$
-CREATE TRIGGER
-    BefInsCom BEFORE
-INSERT
-    ON Compra FOR EACH ROW BEGIN IF(
-        EXISTS (
-            SELECT *
-            FROM Producto
-            WHERE
-                idProducto = NEW.idProducto
-                AND cantidad < NEW.unidades
-        )
-    ) THEN SIGNAL SQLSTATE '45000'
-SET
-    MESSAGE_TEXT = 'Unidades Insuficientes';
-
+DROP TRIGGER IF EXISTS BefInsCom $$
+CREATE TRIGGER BefInsCom BEFORE INSERT ON Compra FOR EACH ROW 
+BEGIN 
+    IF(EXISTS(SELECT * FROM Producto WHERE idProducto = NEW.idProducto AND cantidad < NEW.unidades)) 
+    THEN SIGNAL SQLSTATE '45000'
+    SET MESSAGE_TEXT = 'Unidades Insuficientes';
 END IF;
 
 END $$ --Realizar un trigger para que al momento de hacer una compra, al confirmarse la misma se decremente del stock del producto la cantidad de unidades compradas.
 
 DELIMITER $$
 
-DROP TRIGGER
-    IF EXISTS AftInsCom $$
-CREATE TRIGGER AftInsCom AFTER
-INSERT
-    ON Compra FOR EACH ROW BEGIN
-UPDATE Producto
-SET
-    cantidad = (cantidad - NEW.unidades)
-WHERE
-    idProducto = NEW.idProducto;
-
+DROP TRIGGER IF EXISTS AftInsCom $$
+CREATE TRIGGER AftInsCom AFTER INSERT ON Compra FOR EACH ROW 
+BEGIN
+    UPDATE Producto
+    SET cantidad = (cantidad - NEW.unidades)
+    WHERE idProducto = NEW.idProducto;
 END$$ 
