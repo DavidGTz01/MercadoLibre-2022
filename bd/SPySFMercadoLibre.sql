@@ -4,8 +4,7 @@
 
 DELIMITER $$
 
-DROP PROCEDURE
-    IF EXISTS AltaCompra $$
+DROP PROCEDURE IF EXISTS AltaCompra $$
 CREATE PROCEDURE AltaCompra (unidCompra INTEGER UNSIGNED,unidProducto INTEGER UNSIGNED,unidCliente SMALLINT, ununidades BIGINT UNSIGNED,unpreciocompra DECIMAL(11, 2),unfechahora DATETIME)
 BEGIN 
     INSERT INTO Compra (idCompra,idProducto,idCliente,unidades,preciocompra,fechahora)
