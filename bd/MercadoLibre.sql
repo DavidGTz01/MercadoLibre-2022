@@ -8,7 +8,7 @@ USE MercaLibre;
 
 CREATE TABLE
     Cliente(
-        idCliente smallint NOT NULL UNIQUE,
+        idCliente smallint NOT NULL auto_increment UNIQUE ,
         nombre varchar (45) NOT NULL,
         apellido varchar (45) NOT NULL,
         telefono integer NOT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE
 
 CREATE TABLE
     Producto(
-        idProducto integer NOT NULL,
+        idProducto integer NOT NULL auto_increment,
         idCliente smallint NOT NULL,
         precio decimal(11, 2) NOT NULL,
         cantidad bigint NOT NULL,
@@ -34,7 +34,7 @@ CREATE TABLE
 
 CREATE TABLE
     Compra(
-        idCompra integer NOT NULL,
+        idCompra integer NOT NULL auto_increment,
         idProducto integer NOT NULL,
         idCliente smallint NOT NULL,
         unidades bigint NOT NULL,

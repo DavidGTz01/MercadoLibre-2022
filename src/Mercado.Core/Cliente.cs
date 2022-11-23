@@ -7,7 +7,7 @@ namespace Mercado.Core
 {
     public class Cliente
     {
-        public short idCliente { get; set; }
+        public ushort idCliente { get; set; }
         public string nombre { get; set; }
         public string apellido { get; set; }
         public uint telefono { get; set; }
@@ -15,7 +15,7 @@ namespace Mercado.Core
         public string usuario { get; set; }
         public string contrasena { get; set; }
         public Cliente() { }
-        public Cliente(short idCliente, string nombre, string apellido, uint telefono, string email, string usuario, string contrasena)
+        public Cliente(ushort idCliente, string nombre, string apellido, uint telefono, string email, string usuario, string contrasena)
         {
             this.idCliente = idCliente;
             this.nombre = nombre;
