@@ -17,13 +17,13 @@ namespace Mercado.AdoMySQL.Mapeadores
         public override Cliente ObjetoDesdeFila(DataRow fila)
             => new Cliente()
             {
-                idCliente = Convert.ToUInt16(fila["idCliente"]),
                 nombre = fila["nombre"].ToString(),
                 apellido = fila["apellido"].ToString(),
-                telefono = Convert.ToUInt16(fila["telefono"]),
+                telefono = Convert.ToUInt32(fila["telefono"]),
                 email = fila["email"].ToString(),
                 usuario = fila["usuario"].ToString(),
-                contrasena = fila["contrasena"].ToString()
+                contrasena = fila["contrasena"].ToString(),
+                idCliente = Convert.ToUInt16(fila["idCliente"])
             };
 
         public void AltaCliente(Cliente cliente)
@@ -32,9 +32,9 @@ namespace Mercado.AdoMySQL.Mapeadores
         }
 
         public void PostAltaCliente(Cliente cliente)
-       {
+        {
           var paramunidCliente = GetParametro("unidCliente");
-          cliente.idCliente = Convert.ToByte(paramunidCliente.Value);
+          cliente.idCliente = Convert.ToUInt16(paramunidCliente.Value);
         }
         public void ConfigurarAltaCliente(Cliente cliente)
         {

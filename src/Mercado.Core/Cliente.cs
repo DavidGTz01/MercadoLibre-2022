@@ -15,9 +15,8 @@ namespace Mercado.Core
         public string usuario { get; set; }
         public string contrasena { get; set; }
         public Cliente() { }
-        public Cliente(ushort idCliente, string nombre, string apellido, uint telefono, string email, string usuario, string contrasena)
+        public Cliente(string nombre, string apellido, uint telefono, string email, string usuario, string contrasena)
         {
-            this.idCliente = idCliente;
             this.nombre = nombre;
             this.apellido = apellido;
             this.telefono = telefono;

@@ -25,26 +25,20 @@ namespace Mercado.AdoMySQL.Mapeadores
             publicacion = Convert.ToDateTime(fila["publicacion"])
         };
         public List<Producto> ObtenerProductos() => ColeccionDesdeTabla();
-        public List<Producto> ObtenerProductos(Cliente cliente)
-        {
-            SetComandoSP("ProductosPorCliente");
-
-            BP.CrearParametro("unidCliente")
-              .SetTipo(MySql.Data.MySqlClient.MySqlDbType.Int16)
-              .SetValor(cliente.idCliente)
-              .AgregarParametro();
-
-            return ColeccionDesdeSP();
-        }
         public void AltaProducto(Producto producto)
         {
-            EjecutarComandoCon("altaProducto", ConfigurarAltaProducto, producto);
+            EjecutarComandoCon("altaProducto", ConfigurarAltaProducto,PostAltaProducto, producto);
+        }
+        public void PostAltaProducto(Producto producto)
+        {
+          var paramunidProducto = GetParametro("unidProducto");
+          producto.idProducto = Convert.ToUInt16(paramunidProducto.Value);
         }
         private void ConfigurarAltaProducto(Producto producto)
         {
             SetComandoSP("altaProducto");
 
-            BP.CrearParametro("unIdProducto")
+            BP.CrearParametroSalida("unidProducto")
               .SetTipo(MySql.Data.MySqlClient.MySqlDbType.UInt16)
               .AgregarParametro();
 

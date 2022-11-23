@@ -14,9 +14,8 @@ namespace Mercado.Core
         public decimal preciocompra { get; set; }
         public DateTime fechahora { get; set; }
         public Compra() { }
-        public Compra(uint idCompra, Producto idProducto, Cliente idCliente, ulong unidades, decimal preciocompra, DateTime fechahora)
+        public Compra(Producto idProducto, Cliente idCliente, ulong unidades, decimal preciocompra, DateTime fechahora)
         {
-            this.idCompra = idCompra;
             this.idProducto = idProducto;
             this.idCliente = idCliente;
             this.unidades = unidades;

@@ -14,14 +14,14 @@ public class ClienteTest1
     [Fact]
     public void AltaCLiente()
     {
-        var cliente = new Cliente(2, "davi", "tayson", 1149807585, "davi.tay@gmail.com", "peruanop", "puapuapum");
+        var cliente = new Cliente("davi", "tayson", 1149807585, "davi.tay@gmail.com", "peruanop", "puapuapum");
         Ado.AltaCliente(cliente);
-        Assert.Equal(2, cliente.idCliente);
+        Assert.Equal(6, cliente.idCliente);
     }
 
     [Theory]
-    [InlineData(10, "Matias")]
-    public void TraerClientes(short idCliente, string nombre)
+    [InlineData(4, "Matias")]
+    public void TraerClientes(ushort idCliente, string nombre)
     {
         var cliente = Ado.ObtenerClientes();
         Assert.Contains(cliente, c => c.idCliente == idCliente && c.nombre == nombre);

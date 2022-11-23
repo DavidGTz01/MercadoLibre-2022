@@ -18,10 +18,6 @@ namespace Mercado.AdoMySQL.Mapeadores
             MapCliente = mapCliente;
             MapProducto = mapProducto;
         }
-        public MapCompra(MapProducto mapProducto) : this(mapProducto.AdoAGBD)
-        {
-            MapProducto = mapProducto;
-        }
         public override Compra ObjetoDesdeFila(DataRow fila) => new Compra()
         {
             idCompra = Convert.ToUInt16(fila["idCompra"]),
@@ -29,38 +25,21 @@ namespace Mercado.AdoMySQL.Mapeadores
             idCliente = MapCliente.ClientePorId(Convert.ToInt16(fila["idCliente"])),
             unidades = Convert.ToUInt32(fila["unidades"]),
             preciocompra = Convert.ToDecimal(fila["preciocompra"]),
-            fechahora = Convert.ToDateTime(fila["fecha y hora"])
+            fechahora = Convert.ToDateTime(fila["fechahora"])
         };
         public List<Compra> ObtenerCompra() => ColeccionDesdeTabla();
-        public List<Compra> ObtenerCompra(Cliente cliente)
-        {
-            SetComandoSP("CompraPorCliente");
-
-            BP.CrearParametro("unidCliente")
-              .SetTipo(MySql.Data.MySqlClient.MySqlDbType.Byte)
-              .SetValor(cliente.idCliente)
-              .AgregarParametro();
-
-            return ColeccionDesdeSP();
-        }
-        public List<Compra> ObtenerCompra(Producto producto)
-        {
-            SetComandoSP("CompraPorProducto");
-
-            BP.CrearParametro("unidProducto")
-              .SetTipo(MySql.Data.MySqlClient.MySqlDbType.UInt16)
-              .SetValor(producto.idProducto)
-              .AgregarParametro();
-
-            return ColeccionDesdeSP();
-        }
         public void AltaCompra(Compra compra)
         {
-            EjecutarComandoCon("altaCompra", ConfigurarAltaCompra, compra);
+            EjecutarComandoCon("AltaCompra", ConfigurarAltaCompra,PostAltaCompra, compra);
+        }
+        public void PostAltaCompra(Compra compra)
+        {
+          var paramunidcompra = GetParametro("unidCompra");
+          compra.idCompra = Convert.ToUInt16(paramunidcompra.Value);
         }
         private void ConfigurarAltaCompra(Compra compra)
         {
-            SetComandoSP("altaCompra");
+            SetComandoSP("AltaCompra");
 
             BP.CrearParametroSalida("unIdCompra")
               .SetTipo(MySql.Data.MySqlClient.MySqlDbType.UInt16)

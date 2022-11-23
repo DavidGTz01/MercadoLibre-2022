@@ -14,9 +14,8 @@ namespace Mercado.Core
         public string nombre { get; set; }
         public DateTime publicacion { get; set; }
         public Producto() { }
-        public Producto(int idProducto, Cliente idCliente, decimal precio, ulong cantidad, string nombre, DateTime publicacion)
+        public Producto(Cliente idCliente, decimal precio, ulong cantidad, string nombre, DateTime publicacion)
         {
-            this.idProducto = idProducto;
             this.idCliente = idCliente;
             this.precio = precio;
             this.cantidad = cantidad;

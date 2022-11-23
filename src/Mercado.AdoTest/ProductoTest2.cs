@@ -15,8 +15,15 @@ public class ProductoTest2
     public void AltaProducto()
     {
         DateTime tiempo = new DateTime(2022,11,17);
-        var producto = new Producto(1,Ado.ObtenerClientePorId(1)!,5,3,"yoqse",tiempo);
+        var producto = new Producto(Ado.ObtenerClientePorId(1)!,5,3,"yoqse",tiempo);
         Ado.AltaProducto(producto);
-        Assert.Equal(2, producto.idProducto);
+        Assert.Equal(8, producto.idProducto);
+    }
+    [Theory]
+    [InlineData(1)]
+    public void TraerProducto(ushort idProducto)
+    {
+        var Producto = Ado.ObtenerProductos();
+        Assert.Contains(Producto, p => p.idProducto == idProducto);
     }
 }
