@@ -1,7 +1,6 @@
 -- Realizar los SP para dar de alta todas las entidades recibiendo los parámetros necesarios.
 
 DELIMITER $$
-
 DROP PROCEDURE IF EXISTS AltaCompra $$
 CREATE PROCEDURE AltaCompra ( OUT unidCompra INTEGER UNSIGNED,unidProducto INTEGER UNSIGNED,unidCliente SMALLINT, ununidades BIGINT UNSIGNED,unpreciocompra DECIMAL(11, 2),unfechahora DATETIME)
 BEGIN 
@@ -12,9 +11,8 @@ BEGIN
 END $$
 
 DELIMITER $$
-
 DROP PROCEDURE IF EXISTS AltaCliente $$
-CREATE PROCEDURE AltaCliente( OUT unidCliente SMALLINT, unnombre VARCHAR(45),unapellido VARCHAR(45),untelefono INTEGER UNSIGNED,unemail VARCHAR(45),unusuario VARCHAR (45),uncontrasena CHAR(45)) 
+CREATE PROCEDURE AltaCliente(OUT unidCliente SMALLINT, unnombre VARCHAR(45),unapellido VARCHAR(45),untelefono INTEGER UNSIGNED,unemail VARCHAR(45),unusuario VARCHAR (45),uncontrasena CHAR(45)) 
 BEGIN
     INSERT INTO Cliente (nombre,apellido,telefono,email,usuario,contrasena)
     VALUES (unnombre,unapellido,untelefono,unemail,unusuario, SHA2(contrasena, 256));
@@ -30,7 +28,8 @@ BEGIN
     VALUES (unidCliente,unprecio,uncantidad,unnombre,unpublicacion);
     
     SET unidProducto = LAST_INSERT_ID(); 
-END $$ -- Realizar el SF ‘recaudacionPara’ que reciba por parámetros el identificador de un producto y 2 fechas, la función tiene que devolver la sumatoria de las ventas de ese producto entre esas 2 fechas (inclusive).
+END $$ 
+-- Realizar el SF ‘recaudacionPara’ que reciba por parámetros el identificador de un producto y 2 fechas, la función tiene que devolver la sumatoria de las ventas de ese producto entre esas 2 fechas (inclusive).
 
 DELIMITER $$
 DROP FUNCTION
@@ -40,20 +39,20 @@ DROP FUNCTION
     FROM Compra
     WHERE idCompra = unidCompra AND fechahora BETWEEN cotaInferior AND cotaSuperior;
 RETURN resultado;
-END $$ -- Se pide hacer el SP ‘BuscarProducto’ que reciba por parámetro una cadena. El SP tiene que devolver los productos que contengan la cadena en su nombre (Documentación función MATCH-AGAINST).
+END $$ 
+-- Se pide hacer el SP ‘BuscarProducto’ que reciba por parámetro una cadena. El SP tiene que devolver los productos que contengan la cadena en su nombre (Documentación función MATCH-AGAINST).
 
 DELIMITER $$
-
 DROP PROCEDURE IF EXISTS BuscarProducto $$
 CREATE PROCEDURE BuscarProducto (nombre VARCHAR (45))
 BEGIN
     SELECT nombre
     FROM Producto
     WHERE MATCH (nombre) AGAINST (nombre IN boolean mode);
-END $$ -- Realizar el SP ‘VentasDe’ que reciba como parámetro un idUsuario, el SP tiene que devolver todas las columnas de la tabla Compra que pertenezcan al usuario ordenadas por fecha de mayor a menor.
+END $$
+-- Realizar el SP ‘VentasDe’ que reciba como parámetro un idUsuario, el SP tiene que devolver todas las columnas de la tabla Compra que pertenezcan al usuario ordenadas por fecha de mayor a menor.
 
 DELIMITER $$
-
 DROP PROCEDURE IF EXISTS VentasDe $$
 CREATE PROCEDURE VentasDe (unidCliente SMALLINT)
 BEGIN
@@ -61,10 +60,10 @@ BEGIN
     FROM Compra CO INNER JOIN Producto P ON CO.idProducto = P.idProducto
     WHERE idCliente = unidCliente
     ORDER BY fechahora DESC;
-END $$ -- Realizar el SP ‘ComprasDe’ que reciba como parámetro un idUsuario, el SP tiene que devolver todas las columnas de la tabla Compra que pertenezcan al usuario ordenadas por fecha de mayor a menor.
+END $$
+-- Realizar el SP ‘ComprasDe’ que reciba como parámetro un idUsuario, el SP tiene que devolver todas las columnas de la tabla Compra que pertenezcan al usuario ordenadas por fecha de mayor a menor.
 
 DELIMITER $$
-
 DROP PROCEDURE IF EXISTS ComprasDe $$
 CREATE PROCEDURE ComprasDe (unidCliente SMALLINT) 
 BEGIN
