@@ -8,7 +8,7 @@ USE MercaLibre;
 
 CREATE TABLE
     Cliente(
-        idCliente smallint NOT NULL auto_increment UNIQUE ,
+        idCliente smallint NOT NULL auto_increment,
         nombre varchar (45) NOT NULL,
         apellido varchar (45) NOT NULL,
         telefono integer NOT NULL,

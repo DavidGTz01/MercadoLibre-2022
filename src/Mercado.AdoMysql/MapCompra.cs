@@ -30,7 +30,7 @@ namespace Mercado.AdoMySQL.Mapeadores
         public List<Compra> ObtenerCompra() => ColeccionDesdeTabla();
         public void AltaCompra(Compra compra)
         {
-            EjecutarComandoCon("AltaCompra", ConfigurarAltaCompra,PostAltaCompra, compra);
+          EjecutarComandoCon("AltaCompra", ConfigurarAltaCompra, PostAltaCompra, compra);
         }
         public void PostAltaCompra(Compra compra)
         {

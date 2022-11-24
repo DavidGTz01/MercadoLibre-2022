@@ -11,8 +11,8 @@ CALL AltaCliente (@idM,'Magali Lara Aborto','Rodriguez',1198778890,'maga.rodrigu
 SET @idELMATI = NULL;
 CALL Altacliente (@idELMATI,'Matias','Moscoso',1032547698,'matimoscoso10@gmail.com','Mati','matias12345');
 
-SET @idCompra = NULL;
-CALL Altacliente (@idCompra,'David','Tay',100000000, 'davidtay15@gmail.com','David','guevara987'); -- 9876543210 valor largoooo
+SET @idfers = NULL;
+CALL Altacliente (@idfers,'David','Tay',1000000000, 'davidtay15@gmail.com','David','guevara987'); -- 9876543210 valor largoooo
 
 
 
