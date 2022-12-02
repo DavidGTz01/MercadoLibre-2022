@@ -14,11 +14,11 @@ public class CompraTest3
     [Fact]
     public void AltaCompra()
     {
-        
+
         DateTime hora = new DateTime(2022, 11, 23);
-        var compra = new Compra(Ado.ObtenerProductosPorId(1),Ado.ObtenerClientePorId(1),1,2,hora);
+        var compra = new Compra(Ado.ObtenerProductosPorId(1), Ado.ObtenerClientePorId(1), 1, 2, hora);
         Ado.AltaCompra(compra);
-        Assert.Equal((uint)12, compra.idCompra);
+        Assert.Equal((uint)6, compra.idCompra);
     }
 
     [Theory]
