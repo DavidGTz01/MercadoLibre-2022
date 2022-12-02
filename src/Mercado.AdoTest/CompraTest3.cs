@@ -18,7 +18,7 @@ public class CompraTest3
         DateTime hora = new DateTime(2022, 11, 23);
         var compra = new Compra(Ado.ObtenerProductosPorId(1), Ado.ObtenerClientePorId(1), 1, 2, hora);
         Ado.AltaCompra(compra);
-        Assert.Equal((uint)8, compra.idCompra);
+        Assert.Equal((uint)11, compra.idCompra);
     }
 
     [Theory]
